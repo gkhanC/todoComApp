@@ -44,12 +44,17 @@ namespace todoCOM
             Console.Clear();
 
             CreateEditCommand(args, ref todo, color, messageViewer);
-            CreateCategoryCommand(args, ref todo, color, messageViewer);
 
 
             bool isCategorySetter = false;
             string categoryName = "";
             CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref isCategorySetter, ref categoryName);
+
+            if (_FLAG != OptionFlags.EditCategory)
+            {
+                CreateCategoryCommand(args, ref todo, color, messageViewer);
+            }
+
             CreateCompleteCommand(args, ref todo, color, messageViewer);
             CreateTagCommand(args, ref todo, color, messageViewer);
             CreateAddCommand(args, ref todo, color, messageViewer);
