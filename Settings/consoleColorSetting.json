@@ -1,0 +1,52 @@
+{
+  "SuccessNotifyColor": {
+    "foregroundColor": 10,
+    "backgroundColor": 0
+  },
+  "FailedNotifyColor": {
+    "foregroundColor": 12,
+    "backgroundColor": 0
+  },
+  "WarningNotifyColor": {
+    "foregroundColor": 14,
+    "backgroundColor": 0
+  },
+  "SeparatorColor": {
+    "foregroundColor": 5,
+    "backgroundColor": 0
+  },
+  "IdColor": {
+    "foregroundColor": 14,
+    "backgroundColor": 0
+  },
+  "TagColor": {
+    "foregroundColor": 6,
+    "backgroundColor": 0
+  },
+  "TitleColor": {
+    "foregroundColor": 15,
+    "backgroundColor": 0
+  },
+  "DoneTitleColor": {
+    "foregroundColor": 13,
+    "backgroundColor": 0
+  },
+  "CategoryColor": {
+    "foregroundColor": 1,
+    "backgroundColor": 0
+  },
+  "CreateDateColor": {
+    "foregroundColor": 9,
+    "backgroundColor": 0
+  },
+  "DueDateColor": {
+    "foregroundColor": 2,
+    "backgroundColor": 0
+  },
+  "DefaultColor": {
+    "foregroundColor": 15,
+    "backgroundColor": 0
+  },
+  "SettingFileName": "consoleColorSetting.json",
+  "SettingFilePath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoCommand\\todoCOM\\Settings"
+}
