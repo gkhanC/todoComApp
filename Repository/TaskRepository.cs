@@ -29,7 +29,6 @@ namespace todoCOM.Repository
                 return false;
 
             task.Id = TotalTaskCount().ToString().ToLower(CultureInfo.CurrentCulture);
-            task.isCompleted = task.isCompleted;
 
             if (string.IsNullOrWhiteSpace(task.Tag))
             {
@@ -51,8 +50,22 @@ namespace todoCOM.Repository
 
             task.CreateDate = DateTime.Now.ToShortDateString();
 
+            if (task.isCompleted)
+                task.DueDate = DateTime.Now.ToShortDateString();
+
             Tasks.Add(task);
             return true;
+        }
+
+        public bool DeleteTask(TodoTask todo)
+        {
+            if (Tasks.Contains(todo))
+            {
+                Tasks.Remove(todo);
+                return true;
+            }
+
+            return false;
         }
 
         public bool SelectTask(string id, ref TodoTask task)
@@ -130,6 +143,7 @@ namespace todoCOM.Repository
 
             var index = Tasks.IndexOf(todo);
             todo.isCompleted = true;
+            todo.DueDate = DateTime.Now.ToShortDateString();
             Tasks[index] = todo;
             return todo;
         }

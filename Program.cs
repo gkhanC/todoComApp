@@ -45,6 +45,25 @@ namespace todoCOM
 
             string categoryName = "";
 
+            CreateDeleteCommand(args, ref todo, color, messageViewer);
+
+            if (_FLAG == OptionFlags.Delete)
+            {
+                if (_REPOSİTORY.DeleteTask(todo))
+                {
+                    var deleteNotify = new DeleteNotifyViewer(todo, color);
+                    deleteNotify.Show();
+                }
+                else
+                {
+                    Console.WriteLine("The task could not be deleted.");
+                }
+
+                _REPOSİTORY.ShowHub(color, HubViewer.HubDirective.All);
+                return;
+            }
+
+
             CreateEditCommand(args, ref todo, color, messageViewer);
 
             if (_FLAG != OptionFlags.Edit)
@@ -93,6 +112,36 @@ namespace todoCOM
 
             CreateShowCommand(args, ref todo, color, messageViewer);
             CreateShowAllCommand(args, ref todo, color, messageViewer);
+        }
+
+        public static void CreateDeleteCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
+            MessageViewer messageViewer)
+        {
+            var deleteCommand = new DeleteCommand();
+            if (deleteCommand.Invoke(args))
+            {
+                var id = deleteCommand.GetValue();
+                if (_REPOSİTORY.SelectTask(id, ref todo))
+                {
+                    _FLAG = OptionFlags.Delete;
+                }
+            }
+
+            if (deleteCommand.GetFlag(out var f))
+            {
+                if (f == OptionFlags.Error)
+                {
+                    var msg_1 =
+                        $"Main Command : {deleteCommand.optionString} or {deleteCommand.aliasString} (int)taskId -> Deletes selected task.";
+
+                    messageViewer =
+                        new MessageViewer(
+                            $"{deleteCommand.optionString}/{deleteCommand.aliasString} argument is wrong type.",
+                            color, msg_1);
+                    messageViewer.Show();
+                    _REPOSİTORY.ShowCategory(color);
+                }
+            }
         }
 
         public static void CreateEditCategoryCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
@@ -327,7 +376,6 @@ namespace todoCOM
             //Shows help
             if (completeCommand.GetFlag(out var flag))
             {
-                Console.WriteLine(flag);
                 if (flag == OptionFlags.Error)
                 {
                     var msg_1 =
