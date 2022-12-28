@@ -10,7 +10,7 @@ namespace todoCOM.Command;
 /// <summary>
 /// The Complete command changes the isComplete information of the task.
 /// </summary>
-public class CompleteCommand : CommandBaseFlag , ITodoCommand
+public class CompleteCommand : CommandBaseFlag, ITodoCommand
 {
     public string optionString { get; private set; } = "--complete";
 
@@ -84,25 +84,25 @@ public class CompleteCommand : CommandBaseFlag , ITodoCommand
             {
                 _flag = OptionFlags.UnComplete;
             }
+
+            _command.Invoke(args[optionIndex] + " " + msg);
+            return true;
         }
-        else
+
+        if (args.Length > optionIndex + 1)
         {
-            if (args.Length > optionIndex + 1)
+            if (Regex.IsMatch(args[optionIndex + 1], @"^\d+$"))
             {
-                if (Regex.IsMatch(args[optionIndex + 1], @"^\d+$"))
-                {
-                    msg = Regex.Match(args[optionIndex + 1], @"^\d+$").Value;
-                    _flag = OptionFlags.Complete;
-                }
-                else
-                {
-                    _flag = OptionFlags.Error;
-                }
+                msg = Regex.Match(args[optionIndex + 1], @"^\d+$").Value;
+                _flag = OptionFlags.Complete;
+
+                _command.Invoke(args[optionIndex] + " " + msg);
+                return true;
             }
         }
 
-        _command.Invoke(args[optionIndex] + " " + msg);
-        return true;
+        _flag = OptionFlags.Error;
+        return false;
     }
 
     public override string GetValue()

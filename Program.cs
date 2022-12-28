@@ -48,7 +48,9 @@ namespace todoCOM
 
             bool isCategorySetter = false;
             string categoryName = "";
-            CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref isCategorySetter, ref categoryName);
+
+            if (_FLAG != OptionFlags.Edit)
+                CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref isCategorySetter, ref categoryName);
 
             if (_FLAG != OptionFlags.EditCategory)
             {
@@ -279,31 +281,15 @@ namespace todoCOM
             MessageViewer messageViewer)
         {
             var completeCommand = new CompleteCommand();
+
             if (completeCommand.Invoke(args))
             {
+                Console.WriteLine("Invoke oldu");
                 var val = completeCommand.GetValue();
                 if (string.Equals(val, completeCommand.completeKey))
                 {
                     if (completeCommand.GetFlag(out var f))
                     {
-                        if (f == OptionFlags.Error)
-                        {
-                            var msg_1 =
-                                $"Command : {completeCommand.optionString} or {completeCommand.aliasString} (int)taskId -> Completes task.";
-
-                            var msg_2 =
-                                $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as complete";
-
-                            var msg_3 =
-                                $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as incomplete";
-
-                            messageViewer =
-                                new MessageViewer(
-                                    $"{completeCommand.optionString}/{completeCommand.aliasString} argument is wrong type.",
-                                    color, msg_1, msg_2, msg_3);
-                            messageViewer.Show();
-                        }
-
                         todo.isCompleted = f == OptionFlags.Complete;
                     }
                 }
@@ -322,6 +308,28 @@ namespace todoCOM
                         var taskViewer = new TaskViewer(res, color);
                         taskViewer.Show();
                     }
+                }
+            }
+
+            if (completeCommand.GetFlag(out var flag))
+            {
+                Console.WriteLine(flag);
+                if (flag == OptionFlags.Error)
+                {
+                    var msg_1 =
+                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} (int)taskId -> Completes task.";
+
+                    var msg_2 =
+                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as complete";
+
+                    var msg_3 =
+                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as incomplete";
+
+                    messageViewer =
+                        new MessageViewer(
+                            $"{completeCommand.optionString}/{completeCommand.aliasString} argument is wrong type.",
+                            color, msg_1, msg_2, msg_3);
+                    messageViewer.Show();
                 }
             }
         }
