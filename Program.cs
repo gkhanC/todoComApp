@@ -43,14 +43,24 @@ namespace todoCOM
             var messageViewer = new MessageViewer("", color);
             Console.Clear();
 
-            CreateEditCommand(args, ref todo, color, messageViewer);
-
-
-            bool isCategorySetter = false;
             string categoryName = "";
 
+            CreateEditCommand(args, ref todo, color, messageViewer);
+
             if (_FLAG != OptionFlags.Edit)
-                CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref isCategorySetter, ref categoryName);
+                CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref categoryName);
+
+            if (_FLAG == OptionFlags.EditCategory)
+            {
+                todo.Category = categoryName;
+
+                if (_REPOSİTORY.EditCategory(todo))
+                {
+                    _REPOSİTORY.ShowHub(color, HubViewer.HubDirective.All);
+                }
+
+                return;
+            }
 
             if (_FLAG != OptionFlags.EditCategory)
             {
@@ -71,23 +81,6 @@ namespace todoCOM
                 }
             }
 
-            if (_FLAG == OptionFlags.EditCategory)
-            {
-                todo.Category = categoryName;
-
-
-                if (_REPOSİTORY.EditCategory(todo))
-                {
-                    Console.WriteLine("kat:" + todo.Category);
-                    Console.WriteLine("Kategory değiştirldi");
-                }
-                else
-                {
-                    Console.WriteLine("Kategory değiştirilemedi");
-                    return;
-                }
-            }
-
             if (_FLAG == OptionFlags.Add)
             {
                 var isAdded = _REPOSİTORY.AddTask(ref todo);
@@ -103,7 +96,7 @@ namespace todoCOM
         }
 
         public static void CreateEditCategoryCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
-            MessageViewer messageViewer, ref bool isCategorySetter, ref string category)
+            MessageViewer messageViewer, ref string category)
         {
             var editCategoryCommand = new EditCategoryCommand();
 
@@ -113,32 +106,30 @@ namespace todoCOM
 
                 editCategoryCommand.GetFlag(out _FLAG);
 
-                if (editCategoryCommand is { isNumeric: true, isCategorySetter: true })
+                if (editCategoryCommand is { isNumeric: true })
                 {
                     var i = Convert.ToInt32(editCategoryCommand.GetValue());
                     todo.Category = _REPOSİTORY.SelectCategory(i);
                 }
 
-                isCategorySetter = editCategoryCommand.isCategorySetter;
                 category = editCategoryCommand.categoryName;
+                return;
             }
-            else
-            {
-                editCategoryCommand.GetFlag(out _FLAG);
-                if (_FLAG == OptionFlags.Error)
-                {
-                    var msg_1 =
-                        $"Main Command : {editCategoryCommand.optionString} or {editCategoryCommand.aliasString} (int)categoryId -> Edits selected category's name.";
-                    var msg_2 =
-                        $"with Command : --category (string)newName";
 
-                    messageViewer =
-                        new MessageViewer(
-                            $"{editCategoryCommand.optionString}/{editCategoryCommand.aliasString} argument is wrong type.",
-                            color, msg_1, msg_2);
-                    messageViewer.Show();
-                    _REPOSİTORY.ShowCategory(color);
-                }
+            editCategoryCommand.GetFlag(out _FLAG);
+            if (_FLAG == OptionFlags.Error)
+            {
+                var msg_1 =
+                    $"Main Command : {editCategoryCommand.optionString} or {editCategoryCommand.aliasString} (int)categoryId -> Edits selected category's name.";
+                var msg_2 =
+                    $"with Command : --category (string)newName";
+
+                messageViewer =
+                    new MessageViewer(
+                        $"{editCategoryCommand.optionString}/{editCategoryCommand.aliasString} argument is wrong type.",
+                        color, msg_1, msg_2);
+                messageViewer.Show();
+                _REPOSİTORY.ShowCategory(color);
             }
         }
 
@@ -150,40 +141,29 @@ namespace todoCOM
             {
                 var val = editCommand.GetValue();
                 editCommand.GetFlag(out _FLAG);
-                if (!_REPOSİTORY.SelectTask(val, ref todo))
-                {
-                    var msg_1 =
-                        $"Main Command : {editCommand.optionString} or {editCommand.aliasString} (int)taskId -> Edits task.";
-                    var msg_2 =
-                        $"with Command : --add or -add  (string) title -> Edits task's title";
-                    var msg_3 =
-                        $"with Command : --complete or -cmp t or f -> The current task is marked as complete or incomplete";
 
-                    messageViewer =
-                        new MessageViewer(
-                            $"The task that Task's id: {val} is not found with {editCommand.optionString}/{editCommand.aliasString} argument.",
-                            color, msg_1, msg_2, msg_3);
-                    messageViewer.Show();
+                if (_REPOSİTORY.SelectTask(val, ref todo))
+                {
+                    Console.WriteLine(val);
+                    return;
                 }
             }
-            else
-            {
-                editCommand.GetFlag(out _FLAG);
-                if (_FLAG == OptionFlags.Error)
-                {
-                    var msg_1 =
-                        $"Main Command : {editCommand.optionString} or {editCommand.aliasString} (int)taskId -> Edits task.";
-                    var msg_2 =
-                        $"with Command : --add or -add  (string) title -> Edits task's title";
-                    var msg_3 =
-                        $"with Command : --complete or -cmp t or f -> The current task is marked as complete or incomplete";
 
-                    messageViewer =
-                        new MessageViewer(
-                            $"{editCommand.optionString}/{editCommand.aliasString} argument is wrong type.",
-                            color, msg_1, msg_2, msg_3);
-                    messageViewer.Show();
-                }
+            editCommand.GetFlag(out _FLAG);
+            if (_FLAG == OptionFlags.Error)
+            {
+                var msg_1 =
+                    $"Main Command : {editCommand.optionString} or {editCommand.aliasString} (int)taskId -> Edits task.";
+                var msg_2 =
+                    $"with Command : --add or -add  (string) title -> Edits task's title";
+                var msg_3 =
+                    $"with Command : --complete or -cmp t or f -> The current task is marked as complete or incomplete";
+
+                messageViewer =
+                    new MessageViewer(
+                        $"{editCommand.optionString}/{editCommand.aliasString} argument is wrong type.",
+                        color, msg_1, msg_2, msg_3);
+                messageViewer.Show();
             }
         }
 
@@ -194,6 +174,22 @@ namespace todoCOM
             if (tagCommand.Invoke(args))
             {
                 todo.Tag = tagCommand.GetValue();
+            }
+
+            if (tagCommand.GetFlag(out var f))
+            {
+                if (f == OptionFlags.Error)
+                {
+                    var msg_1 =
+                        $"Main Command : {tagCommand.optionString} or {tagCommand.aliasString} (string)Tag -> Edits task's tag.";
+                    var msg_2 =
+                        $"This command can be used after --add or --edit.";
+                    messageViewer =
+                        new MessageViewer(
+                            $"{tagCommand.optionString}/{tagCommand.aliasString} argument is wrong type.",
+                            color, msg_1, msg_2);
+                    messageViewer.Show();
+                }
             }
         }
 
@@ -217,6 +213,24 @@ namespace todoCOM
                 todo.Title = addCommand.GetValue();
                 if (_FLAG != OptionFlags.Edit)
                     addCommand.GetFlag(out _FLAG);
+            }
+
+            if (addCommand.GetFlag(out var f))
+            {
+                if (f == OptionFlags.Error)
+                {
+                    var msg_1 =
+                        $"Main Command : {addCommand.optionString} or {addCommand.aliasString} (string)Tag -> Adds new todo task..";
+                    var msg_2 =
+                        $"The --add command should include a task body. Example: --add do something.";
+                    var msg_3 =
+                        $"The --add command can also be used in conjunction with the --category, --tag, and --complete commands.";
+                    messageViewer =
+                        new MessageViewer(
+                            $"{addCommand.optionString}/{addCommand.aliasString} argument is wrong type.",
+                            color, msg_1, msg_2, msg_3);
+                    messageViewer.Show();
+                }
             }
         }
 
@@ -284,7 +298,6 @@ namespace todoCOM
 
             if (completeCommand.Invoke(args))
             {
-                Console.WriteLine("Invoke oldu");
                 var val = completeCommand.GetValue();
                 if (string.Equals(val, completeCommand.completeKey))
                 {
@@ -311,6 +324,7 @@ namespace todoCOM
                 }
             }
 
+            //Shows help
             if (completeCommand.GetFlag(out var flag))
             {
                 Console.WriteLine(flag);

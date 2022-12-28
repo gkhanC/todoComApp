@@ -48,6 +48,12 @@ namespace todoCOM.Command.FlagCommand
 
             if (optionIndex <= -1) return false;
 
+            if (args.Length - 1 < optionIndex + 1)
+            {
+                _flag = OptionFlags.Error;
+                return false;
+            }
+
             var s = string.Empty;
 
             for (var i = optionIndex + 1; i < args.Length; i++)

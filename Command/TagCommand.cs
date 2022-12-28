@@ -1,16 +1,20 @@
 ﻿using System.CommandLine;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using todoCOM.Command.Abstract;
+using todoCOM.Command.FlagCommand;
 using todoCOM.Flags;
 
 namespace todoCOM.Command;
 
-public class TagCommand : CommandBase
+public class TagCommand : CommandBaseFlag, ITodoCommand
 {
-    private string optionString { get; set; } = "--tag";
-    private string descriptionString { get; set; } = "Edits  task's tag.";
-    private string aliasString { get; set; } = "-tg";
-    private string result { get; set; } = "";
+    public string optionString { get; private set; } = "--tag";
+    public string descriptionString { get; private set; } = "Edits  task's tag.";
+    public string aliasString { get; private set; } = "-tag";
+    public string result { get; private set; } = "";
+
+    private OptionFlags _flag = OptionFlags.None;
 
     public TagCommand()
     {
@@ -37,6 +41,7 @@ public class TagCommand : CommandBase
 
         if (!containsOption) return false;
 
+        _flag = OptionFlags.None;
         var optionIndex = Array.IndexOf(args, optionString);
         optionIndex = optionIndex < 0 ? Array.IndexOf(args, aliasString) : optionIndex;
 
@@ -44,6 +49,11 @@ public class TagCommand : CommandBase
 
         var msg = "_";
 
+        if (optionIndex == 0)
+        {
+            _flag = OptionFlags.Error;
+            return false;
+        }
 
         if (args.Length > optionIndex + 1)
         {
@@ -75,5 +85,11 @@ public class TagCommand : CommandBase
     public override string GetValue()
     {
         return result;
+    }
+
+    public override bool GetFlag(out OptionFlags flag)
+    {
+        flag = _flag;
+        return _flag != OptionFlags.None;
     }
 }

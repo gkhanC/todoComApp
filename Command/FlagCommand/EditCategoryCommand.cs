@@ -9,15 +9,12 @@ namespace todoCOM.Command.FlagCommand;
 public class EditCategoryCommand : CommandBaseFlag, ITodoCommand
 {
     public string optionString { get; private set; } = "--edit-category";
-    public string optionCategoryString { get; set; } = "--category";
     public string descriptionString { get; private set; } = "Edits selected category's name.";
     public string aliasString { get; private set; } = "-edtc";
-    public string aliasCategoryString { get; set; } = "-cat";
     public string result { get; private set; } = "";
 
     public bool isNumeric { get; private set; } = false;
     public bool isFirst { get; private set; } = false;
-    public bool isCategorySetter { get; private set; } = false;
     public string categoryName { get; private set; } = "";
 
     private OptionFlags _flag = OptionFlags.None;
@@ -44,52 +41,36 @@ public class EditCategoryCommand : CommandBaseFlag, ITodoCommand
     public override bool Invoke(string[] args)
     {
         var containsOption = args.Contains(optionString) || args.Contains(aliasString);
-        var containCategoryCommand = args.Contains(optionCategoryString) || args.Contains(aliasCategoryString);
-        isCategorySetter = !containCategoryCommand;
 
+        _flag = OptionFlags.None;
         if (containsOption)
         {
             var input = args.ToList();
-            int optionIndex = input.IndexOf(optionString);
+            var optionIndex = input.IndexOf(optionString);
             optionIndex = optionIndex < 0 ? input.IndexOf(aliasString) : optionIndex;
 
             isFirst = optionIndex == 0;
 
-            _flag = OptionFlags.Error;
+            if (optionIndex != 0) return false;
+            if (args.Length <= optionIndex + 2 || !isFirst) return false;
+            var msg = args[optionIndex + 1].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
+                .Replace("\"", "");
 
-            var range = isCategorySetter ? 2 : 1;
 
-            if (args.Length > optionIndex + range && isFirst)
+            categoryName = args[optionIndex + 2].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
+                .Replace("\"", "");
+
+            if (!Regex.IsMatch(msg, @"^\d+$")) return false;
+
+            isNumeric = true;
+            if (isNumeric)
             {
-                var msg = args[optionIndex + 1].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
-                    .Replace("\"", "");
-
-                if (isCategorySetter)
+                var replace = Regex.Match(msg, @"^\d+$").Value;
+                if (!String.IsNullOrEmpty(msg))
                 {
-                    categoryName = args[optionIndex + 2].ToLower(CultureInfo.CurrentCulture).Replace(" ", "");
+                    _command.Invoke(args[optionIndex] + " " + replace);
+                    return true;
                 }
-
-                if (Regex.IsMatch(msg, @"^\d+$"))
-                {
-                    isNumeric = true;
-                    if (isNumeric)
-                    {
-                        var replace = Regex.Match(msg, @"^\d+$").Value;
-                        if (!String.IsNullOrEmpty(msg))
-                        {
-                            _command.Invoke(args[optionIndex] + " " + replace);
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    _flag = OptionFlags.Error;
-                }
-            }
-            else
-            {
-                _flag = OptionFlags.Error;
             }
         }
 

@@ -85,28 +85,24 @@ namespace todoCOM.Repository
         public bool EditCategory(TodoTask task)
         {
             var i = CategoryNames.IndexOf(_selectedCategory);
-            if (i > -1)
+            if (i <= -1) return false;
+
+            CategoryNames[i] = task.Category;
+            var selectedCategory = _selectedCategory;
+
+            var todoTask = task;
+
+            foreach (var t in Tasks)
             {
-                CategoryNames[i] = task.Category;
-                var selectedCategory = _selectedCategory;
-                Console.WriteLine("kategory");
-                Console.WriteLine($" yeni {task.Category}");
-                Console.WriteLine($" selected {_selectedCategory}");
-                var todoTask = task;
-
-                foreach (var t in Tasks)
+                if (t.Category == selectedCategory)
                 {
-                    if (t.Category == selectedCategory)
-                    {
-                        t.Category = todoTask.Category;
-                        Console.WriteLine($"{i} {t.Category}");
-                    }
+                    t.Category = todoTask.Category;
                 }
-
-                return true;
             }
 
-            return false;
+            _selectedCategory = todoTask.Category;
+
+            return true;
         }
 
         public void ShowAll(ConsoleColorSettings colorSettings)
@@ -128,7 +124,7 @@ namespace todoCOM.Repository
             if (todo == null)
             {
                 var todoTask = new TodoTask();
-                todoTask.Id = "_#null";
+                todoTask.Id = todoTask.nullKey;
                 return todoTask;
             }
 
