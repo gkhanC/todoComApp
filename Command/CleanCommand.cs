@@ -6,17 +6,17 @@ using todoCOM.Flags;
 
 namespace todoCOM.Command.FlagCommand;
 
-public class DeleteCommand : CommandBaseFlag, ITodoCommand
+public class CleanCommand : CommandBaseFlag, ITodoCommand
 {
-    public string optionString { get; private set; } = "--delete";
+    public string optionString { get; private set; } = "--clean";
     public string descriptionString { get; private set; } = "delete";
-    public string aliasString { get; private set; } = "-del";
+    public string aliasString { get; private set; } = "-clean";
     public string result { get; private set; } = "";
     public bool isNumeric { get; private set; } = false;
 
     private OptionFlags _flag = OptionFlags.None;
 
-    public DeleteCommand()
+    public CleanCommand()
     {
         Init();
     }
@@ -30,7 +30,7 @@ public class DeleteCommand : CommandBaseFlag, ITodoCommand
         _command.SetHandler((x) =>
         {
             if (string.IsNullOrWhiteSpace(x)) return;
-            _flag = OptionFlags.Delete;
+            _flag = OptionFlags.Clean;
             result = x;
         }, _option);
     }
@@ -48,34 +48,14 @@ public class DeleteCommand : CommandBaseFlag, ITodoCommand
 
         if (optionIndex <= -1) return false;
 
-        if (args.Length - 1 < optionIndex + 1)
+        if (optionIndex != 0)
         {
             _flag = OptionFlags.Error;
             return false;
         }
 
-        var msg = args[optionIndex + 1].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
-            .Replace("\"", "");
-
-        if (!Regex.IsMatch(msg, @"^\d+$"))
-        {
-            _flag = OptionFlags.Error;
-            return false;
-        }
-
-        isNumeric = true;
-        if (isNumeric)
-        {
-            var replace = Regex.Match(msg, @"^\d+$").Value;
-            if (!string.IsNullOrEmpty(replace))
-            {
-                _command.Invoke(args[optionIndex] + " " + replace);
-                return true;
-            }
-        }
-
-
-        return false;
+        _command.Invoke(args[optionIndex] + " " + "clean");
+        return true;
     }
 
     public override string GetValue()

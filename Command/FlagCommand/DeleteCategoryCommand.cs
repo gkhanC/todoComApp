@@ -6,17 +6,17 @@ using todoCOM.Flags;
 
 namespace todoCOM.Command.FlagCommand;
 
-public class DeleteCommand : CommandBaseFlag, ITodoCommand
+public class DeleteCategoryCommand : CommandBaseFlag, ITodoCommand
 {
-    public string optionString { get; private set; } = "--delete";
+    public string optionString { get; private set; } = "--delete-category";
     public string descriptionString { get; private set; } = "delete";
-    public string aliasString { get; private set; } = "-del";
+    public string aliasString { get; private set; } = "-delc";
     public string result { get; private set; } = "";
     public bool isNumeric { get; private set; } = false;
 
     private OptionFlags _flag = OptionFlags.None;
 
-    public DeleteCommand()
+    public DeleteCategoryCommand()
     {
         Init();
     }
@@ -30,7 +30,7 @@ public class DeleteCommand : CommandBaseFlag, ITodoCommand
         _command.SetHandler((x) =>
         {
             if (string.IsNullOrWhiteSpace(x)) return;
-            _flag = OptionFlags.Delete;
+            _flag = OptionFlags.DeleteCategory;
             result = x;
         }, _option);
     }
@@ -57,23 +57,28 @@ public class DeleteCommand : CommandBaseFlag, ITodoCommand
         var msg = args[optionIndex + 1].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
             .Replace("\"", "");
 
-        if (!Regex.IsMatch(msg, @"^\d+$"))
-        {
-            _flag = OptionFlags.Error;
-            return false;
-        }
 
-        isNumeric = true;
-        if (isNumeric)
+        if (Regex.IsMatch(msg, @"^\d+$"))
         {
-            var replace = Regex.Match(msg, @"^\d+$").Value;
-            if (!string.IsNullOrEmpty(replace))
+            isNumeric = true;
+            if (isNumeric)
             {
-                _command.Invoke(args[optionIndex] + " " + replace);
+                var replace = Regex.Match(msg, @"^\d+$").Value;
+                if (!string.IsNullOrEmpty(replace))
+                {
+                    _command.Invoke(args[optionIndex] + " " + replace);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(msg))
+            {
+                _command.Invoke(args[optionIndex] + " " + msg);
                 return true;
             }
         }
-
 
         return false;
     }

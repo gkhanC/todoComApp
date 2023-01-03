@@ -6,7 +6,7 @@ public enum OptionFlags
     Delete = 1,
     Complete = 2,
     DeleteCategory = 3,
-    Clen = 4,
+    Clean = 4,
     UnComplete = 5,
     Show = 6,
     ShowAll = 7,

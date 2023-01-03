@@ -68,6 +68,79 @@ namespace todoCOM.Repository
             return false;
         }
 
+        public bool DeleteCategory(string categoryName)
+        {
+            if (!CategoryNames.Contains(categoryName))
+                return false;
+
+            CategoryNames.Remove(categoryName);
+
+            for (int i = 0; i < Tasks.Count; i++)
+            {
+                if (Tasks[i].Category == categoryName)
+                {
+                    Tasks.RemoveAt(i);
+                }
+            }
+
+
+            if (_selectedCategory == categoryName)
+            {
+                if (CategoryNames.Count > 0)
+                {
+                    _selectedCategory = CategoryNames[0];
+                }
+                else
+                {
+                    _selectedCategory = "_";
+                }
+            }
+
+            return true;
+        }
+
+        public bool DeleteCategory(int categoryId)
+        {
+            if (categoryId >= CategoryNames.Count())
+                return false;
+
+            var categoryName = CategoryNames[categoryId];
+
+            if (!categoryName.Contains(categoryName))
+                return false;
+
+            CategoryNames.Remove(categoryName);
+
+            for (int i = 0; i < Tasks.Count; i++)
+            {
+                if (Tasks[i].Category == categoryName)
+                {
+                    Tasks.RemoveAt(i);
+                }
+            }
+
+            if (_selectedCategory == categoryName)
+            {
+                if (CategoryNames.Count > 0)
+                {
+                    _selectedCategory = CategoryNames[0];
+                }
+                else
+                {
+                    _selectedCategory = "_";
+                }
+            }
+
+            return true;
+        }
+
+        public bool Clean()
+        {
+            CategoryNames = new List<string>();
+            Tasks = new List<TodoTask>();
+            return Tasks.Count == 0 && CategoryNames.Count == 0;
+        }
+
         public bool SelectTask(string id, ref TodoTask task)
         {
             var todo = Tasks.Find((x) => x.Id == id);
@@ -75,6 +148,7 @@ namespace todoCOM.Repository
             {
                 task = new TodoTask();
                 task = todo;
+                _selectedCategory = todo.Category;
                 return true;
             }
 
