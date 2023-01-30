@@ -21,28 +21,16 @@ namespace todoCOM
             var color = new ConsoleColorSettings();
             color.Load();
 
-            var t = new TodoTask();
-            t.Title = "Bu bir denemtaskdir";
-            t.isCompleted = true;
-            _REPOSİTORY.AddTask(ref t);
-
-            var t1 = new TodoTask();
-            t1.Title = "Bu bir denemtaskdir2";
-            t1.isCompleted = false;
-            _REPOSİTORY.AddTask(ref t1);
-
-            var t2 = new TodoTask();
-            t2.Title = "Bu bir denemtaskdir2";
-            t2.Category = "önemli";
-            _REPOSİTORY.AddTask(ref t2);
-
-            var t3 = new TodoTask();
-            t3.Title = "Bu bir denemtaskdir2";
-            t3.Category = "deneme";
-            t3.isCompleted = true;
-            _REPOSİTORY.AddTask(ref t3);
             var messageViewer = new MessageViewer("", color);
             Console.Clear();
+
+            if (args.Length == 0)
+            {
+                var msg = $"TodoCom Initialized. \nTodoCom working on \"{_REPOSİTORY.selectedCategory}\" category. ";
+                messageViewer.SetMessage(msg);
+                messageViewer.Show();
+                return;
+            }
 
             string categoryName = "";
 

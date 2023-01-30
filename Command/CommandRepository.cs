@@ -136,7 +136,7 @@ public static class CommandRepository
             repository.ShowCategory(color);
         }
     }
-    
+
     public static void CreateEditCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer, ref TaskRepository repository, ref OptionFlags flag)
     {
@@ -148,7 +148,6 @@ public static class CommandRepository
 
             if (repository.SelectTask(val, ref todo))
             {
-                Console.WriteLine(val);
                 return;
             }
         }
@@ -170,7 +169,7 @@ public static class CommandRepository
             messageViewer.Show();
         }
     }
-    
+
     public static void CreateTagCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer)
     {
@@ -196,7 +195,7 @@ public static class CommandRepository
             }
         }
     }
-    
+
     public static void CreateShowAllCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer, ref TaskRepository repository)
     {
@@ -207,7 +206,7 @@ public static class CommandRepository
             return;
         }
     }
-    
+
     public static void CreateAddCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer, ref OptionFlags flag)
     {
@@ -237,7 +236,7 @@ public static class CommandRepository
             }
         }
     }
-    
+
     public static void CreateShowCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer, ref TaskRepository repository)
     {
@@ -264,7 +263,7 @@ public static class CommandRepository
             return;
         }
     }
-    
+
     public static void CreateCategoryCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
         MessageViewer messageViewer, ref TaskRepository repository)
     {
@@ -294,63 +293,60 @@ public static class CommandRepository
             }
         }
     }
-    
-     public static void CreateCompleteCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
-            MessageViewer messageViewer, ref TaskRepository repository)
-        {
-            var completeCommand = new CompleteCommand();
 
-            if (completeCommand.Invoke(args))
+    public static void CreateCompleteCommand(string[] args, ref TodoTask todo, ConsoleColorSettings color,
+        MessageViewer messageViewer, ref TaskRepository repository)
+    {
+        var completeCommand = new CompleteCommand();
+
+        if (completeCommand.Invoke(args))
+        {
+            var val = completeCommand.GetValue();
+            if (string.Equals(val, completeCommand.completeKey))
             {
-                var val = completeCommand.GetValue();
-                if (string.Equals(val, completeCommand.completeKey))
+                if (completeCommand.GetFlag(out var f))
                 {
-                    if (completeCommand.GetFlag(out var f))
-                    {
-                        todo.isCompleted = f == OptionFlags.Complete;
-                    }
+                    todo.isCompleted = f == OptionFlags.Complete;
+                }
+            }
+            else
+            {
+                var res = repository.CompleteTask(val);
+                if (res == null || string.Equals(res.Id, res.nullKey))
+                {
+                    messageViewer = new MessageViewer($"The task is not found with id: {val}", color);
+                    messageViewer.Show();
                 }
                 else
                 {
-                    var res = repository.CompleteTask(val);
-                    if (res == null || string.Equals(res.Id, res.nullKey))
-                    {
-                        messageViewer = new MessageViewer($"The task is not found with id: {val}", color);
-                        messageViewer.Show();
-                    }
-                    else
-                    {
-                        messageViewer = new MessageViewer($"The task is completed.", color);
-                        messageViewer.Show();
-                        var taskViewer = new TaskViewer(res, color);
-                        taskViewer.Show();
-                    }
-                }
-            }
-
-            //Shows help
-            if (completeCommand.GetFlag(out var flag))
-            {
-                if (flag == OptionFlags.Error)
-                {
-                    var msg_1 =
-                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} (int)taskId -> Completes task.";
-
-                    var msg_2 =
-                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as complete";
-
-                    var msg_3 =
-                        $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as incomplete";
-
-                    messageViewer =
-                        new MessageViewer(
-                            $"{completeCommand.optionString}/{completeCommand.aliasString} argument is wrong type.",
-                            color, msg_1, msg_2, msg_3);
+                    messageViewer = new MessageViewer($"The task is completed.", color);
                     messageViewer.Show();
+                    var taskViewer = new TaskViewer(res, color);
+                    taskViewer.Show();
                 }
             }
         }
-    
-    
-    
+
+        //Shows help
+        if (completeCommand.GetFlag(out var flag))
+        {
+            if (flag == OptionFlags.Error)
+            {
+                var msg_1 =
+                    $"Command : {completeCommand.optionString} or {completeCommand.aliasString} (int)taskId -> Completes task.";
+
+                var msg_2 =
+                    $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as complete";
+
+                var msg_3 =
+                    $"Command : {completeCommand.optionString} or {completeCommand.aliasString} t -> The current task is marked as incomplete";
+
+                messageViewer =
+                    new MessageViewer(
+                        $"{completeCommand.optionString}/{completeCommand.aliasString} argument is wrong type.",
+                        color, msg_1, msg_2, msg_3);
+                messageViewer.Show();
+            }
+        }
+    }
 }

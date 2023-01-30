@@ -120,9 +120,9 @@ public class HubViewer : Viewer
 
     private CategorySeparator CreateCategorySeparators()
     {
-        var selected = _repository.Tasks.Where((x) => x.Category == _repository.selectedCategory());
+        var selected = _repository.Tasks.Where((x) => x.Category == _repository.getSelectedCategory());
         var cat = new CategorySeparator();
-        cat.categoryName = _repository.selectedCategory() ?? "_";
+        cat.categoryName = _repository.getSelectedCategory() ?? "_";
 
         foreach (var task in selected)
         {

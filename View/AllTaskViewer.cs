@@ -27,7 +27,7 @@ namespace todoCOM.View
 
             Console.ForegroundColor = _color.DefaultColor.ForegroundColor;
             Console.BackgroundColor = _color.DefaultColor.BackgroundColor;
-            var totalTask = "Total number of tasks:" + _repository.TotalTaskCount().ToString();
+            var totalTask = "Total number of tasks:" + _repository.getTotalTaskCount().ToString();
             Console.Write($"{totalTask,-28}");
             Console.WriteLine("");
 

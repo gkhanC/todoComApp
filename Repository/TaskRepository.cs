@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
 using todoCOM.Entities;
 using todoCOM.Utils;
 using todoCOM.View;
@@ -8,19 +7,33 @@ namespace todoCOM.Repository
 {
     public class TaskRepository
     {
-        public int TotalTaskCount() => Tasks.Count;
-        public int TotalCategoryCount() => CategoryNames.Count;
+        public int totalTaskCount { get; set; } = 0;
+        public int categoryCount { get; set; } = 0;
+
+        public string selectedCategory { get; set; } = "_";
+
+
+        public int getTotalTaskCount() => totalTaskCount;
+        public int getTotalCategoryCount() => CategoryNames.Count;
 
         public List<string> CategoryNames { get; set; } = new List<string> { "_" };
         public List<TodoTask> Tasks { get; set; } = new List<TodoTask>();
-        private string _selectedCategory = "_";
 
-        public string selectedCategory()
+        public TaskRepository()
         {
-            if (string.IsNullOrWhiteSpace(_selectedCategory))
-                return "";
+            var rData = new RepositoryData();
+            var loadedData = SaveLoadTool.LoadRepositoryData(rData);
+            totalTaskCount = loadedData.totalTaskCount;
+            categoryCount = loadedData.categoryCount;
+            selectedCategory = loadedData.selectedCategory;
+        }
 
-            return _selectedCategory;
+        public string getSelectedCategory()
+        {
+            if (string.IsNullOrWhiteSpace(selectedCategory))
+                return "_";
+
+            return selectedCategory;
         }
 
         public bool AddTask(ref TodoTask task)
@@ -28,7 +41,7 @@ namespace todoCOM.Repository
             if (string.IsNullOrWhiteSpace(task.Title))
                 return false;
 
-            task.Id = TotalTaskCount().ToString().ToLower(CultureInfo.CurrentCulture);
+            task.Id = getTotalTaskCount().ToString().ToLower(CultureInfo.CurrentCulture);
 
             if (string.IsNullOrWhiteSpace(task.Tag))
             {
@@ -41,7 +54,7 @@ namespace todoCOM.Repository
 
             if (string.IsNullOrWhiteSpace(task.Category))
             {
-                task.Category = _selectedCategory.ToLower(CultureInfo.CurrentCulture);
+                task.Category = selectedCategory.ToLower(CultureInfo.CurrentCulture);
             }
 
             if (!CategoryNames.Contains(task.Category))
@@ -84,15 +97,15 @@ namespace todoCOM.Repository
             }
 
 
-            if (_selectedCategory == categoryName)
+            if (selectedCategory == categoryName)
             {
                 if (CategoryNames.Count > 0)
                 {
-                    _selectedCategory = CategoryNames[0];
+                    selectedCategory = CategoryNames[0];
                 }
                 else
                 {
-                    _selectedCategory = "_";
+                    selectedCategory = "_";
                 }
             }
 
@@ -119,15 +132,15 @@ namespace todoCOM.Repository
                 }
             }
 
-            if (_selectedCategory == categoryName)
+            if (selectedCategory == categoryName)
             {
                 if (CategoryNames.Count > 0)
                 {
-                    _selectedCategory = CategoryNames[0];
+                    selectedCategory = CategoryNames[0];
                 }
                 else
                 {
-                    _selectedCategory = "_";
+                    selectedCategory = "_";
                 }
             }
 
@@ -138,6 +151,10 @@ namespace todoCOM.Repository
         {
             CategoryNames = new List<string>();
             Tasks = new List<TodoTask>();
+
+            //TODO: veriler tamamaen silinecek
+
+
             return Tasks.Count == 0 && CategoryNames.Count == 0;
         }
 
@@ -148,7 +165,7 @@ namespace todoCOM.Repository
             {
                 task = new TodoTask();
                 task = todo;
-                _selectedCategory = todo.Category;
+                selectedCategory = todo.Category;
                 return true;
             }
 
@@ -171,11 +188,11 @@ namespace todoCOM.Repository
 
         public bool EditCategory(TodoTask task)
         {
-            var i = CategoryNames.IndexOf(_selectedCategory);
+            var i = CategoryNames.IndexOf(this.selectedCategory);
             if (i <= -1) return false;
 
             CategoryNames[i] = task.Category;
-            var selectedCategory = _selectedCategory;
+            var selectedCategory = this.selectedCategory;
 
             var todoTask = task;
 
@@ -187,7 +204,7 @@ namespace todoCOM.Repository
                 }
             }
 
-            _selectedCategory = todoTask.Category;
+            this.selectedCategory = todoTask.Category;
 
             return true;
         }
@@ -224,7 +241,7 @@ namespace todoCOM.Repository
 
         public void ShowCategory(ConsoleColorSettings colorSettings)
         {
-            var msg = "Selected Category: " + _selectedCategory;
+            var msg = "Selected Category: " + selectedCategory;
             var list = "";
 
             for (int i = 0; i < CategoryNames.Count(); i++)
@@ -240,10 +257,10 @@ namespace todoCOM.Repository
         {
             if (id < CategoryNames.Count)
             {
-                _selectedCategory = CategoryNames[id];
+                selectedCategory = CategoryNames[id];
             }
 
-            return _selectedCategory;
+            return selectedCategory;
         }
 
         public string SelectCategory(string category)
@@ -252,31 +269,31 @@ namespace todoCOM.Repository
             if (CategoryNames.Contains(category))
             {
                 var index = CategoryNames.IndexOf(s);
-                _selectedCategory = CategoryNames[index];
+                selectedCategory = CategoryNames[index];
             }
             else
             {
                 CategoryNames.Add(s);
-                _selectedCategory = s;
+                selectedCategory = s;
             }
 
-            return _selectedCategory;
+            return selectedCategory;
         }
 
         public string SelectCategoryAndNotify(int id, ConsoleColorSettings colorSettings)
         {
             if (id >= CategoryNames.Count)
             {
-                var msg = $"Category is not found with category id: \"{id}\". Selected Category: {_selectedCategory} ";
+                var msg = $"Category is not found with category id: \"{id}\". Selected Category: {selectedCategory} ";
                 var messageViewer = new MessageViewer(msg, colorSettings);
                 messageViewer.Show();
             }
             else
             {
-                _selectedCategory = CategoryNames[id];
+                selectedCategory = CategoryNames[id];
             }
 
-            return _selectedCategory;
+            return selectedCategory;
         }
     }
 }
