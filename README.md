@@ -1,4 +1,4 @@
-﻿#TodoCom - A Command Line Todo App
+# TodoCom - A Command Line Todo App
 ___
 TodoCom, PowerShell aracılığıyla görev yönetimi kolaylaştıran bir todo uygulamasıdır. Görev oluşturma, silme, kategorilere ayırma ve düzenleme fonksiyonları sunmaktadır.
 
