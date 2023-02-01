@@ -88,7 +88,7 @@ Girdi:
     1    [_]  <buy>:   buy new pen                                                   shopping    1.02.2023
 
 
-* --show veya -shw => görevi oluşturur ve kategori içerisindeki görevleri görüntüler. Tamamlanmış görevleri filtrelemek için <b>comp<b/> deyimi ile birlikte kullanıma bilir => --show comp. Tamamlanmamış görevleri filtrelemek için  <b>uncomp<b/> deyimi kullanılır.
+* --show veya -shw => görevi oluşturur ve kategori içerisindeki görevleri görüntüler. Tamamlanmış görevleri filtrelemek için <b>comp</b> deyimi ile birlikte kullanıma bilir => --show comp. Tamamlanmamış görevleri filtrelemek için  <b>uncomp</b> deyimi kullanılır.
 
 Girdi:
 
