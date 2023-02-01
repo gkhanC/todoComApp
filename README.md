@@ -17,20 +17,75 @@ ___
 TodoCom'u kullanmak için aşağıdaki adımları izleyin:
 
 Repository'yi klonlayın veya indirin.
-Klonladığınız dizine terminal ile girin.
-npm install komutunu çalıştırın.
-TodoCom'u node index.js komutu ile çalıştırın.
-Kullanım
-Yeni bir görev oluşturmak için node index.js add komutunu kullanın.
-Görev silmek için node index.js remove komutunu kullanın.
-Görevleri kategorilere ayırmak için node index.js categorize komutunu kullanın.
-Daha önce oluşturulmuş görevleri düzenlemek için node index.js edit komutunu kullanın.
-Lisans
-TodoCom MIT License ile lisanslanmıştır.
+Klonladığınız dizine terminal ile girin ve aşağıdaki kodu çalıştırın.
 
-Sorunlar ve Destek
-Eğer uygulamada bir sorunla karşılaşırsanız veya daha fazla destek isterseniz, Github sayfamızda iletişim bilgilerini kullanarak bizimle iletişime geçebilirsiniz.
+        dotnet build -c Release -o bin/Release
 
+Derleme işlemi bittikten sonra bin/Release klasörü içerisindeki todoCOm.exe dosyasının yolunu kopyalayın.
+
+Dosya yolu aşağıdaki gibi görünmeli:
+
+        C:\Users\you\Documents\todoCOM\bin\Release
+
+
+Windows Terminal ve ya PowerShell'i açın ve aşağıdaki kodu yazınız. Çıktıda görünen path'e gidip profile dosyasını açınız
+    
+        $profile
+
+Bilgisayarınızda VsCode yüklü ise aşağıdaki kod ile bu işlemi yapabilirsiniz.
+
+        code $profile
+
+
+Açılan dosyaya aşağıdaki satırı ekleyip ve kopyaladığımız dosya yolunu içerekcek şeklde satırı düzenleyip kaydedin.
+
+        function todocom { Kopyaladığımız dosya youlu buraya yapıştırılacak son kısmı silmeyin\todoCOM.exe}
+
+Satır şu şekilde görünmeli:
+
+        function todocom {  C:\Users\you\Documents\todoCOM\bin\Release\todoCOM.exe}
+
+
+PowerShell veya windows terminal'i kapatın.
+
+Kendi kullanıcı dizinize giderek Repository adında bir klasör oluşturun.
+Kullanıcı dizininiz şu şekilde görünmeli:
+
+        C:\Users\yourusername
+
+PowerShell ve ya Windows Terminali açın ve aşağıdaki kodu yazın.
+
+        todocom
+
+Ekranda şuan benzer bir çıktı görürseniz todoCom çalışıyor demektir.
+
+        ______________________________________________________________________________________________________________
+        TodoCOM Shows Message:
+        TodoCom Initialized.
+        TodoCom working on "main" category.
+        ______________________________________________________________________________________________________________
+        ______________________________________________________________________________________________________________
+
+
+### Kullanım
+___
+Yeni bir görev oluşturmak için --add komutunu kullanın ve boşluk bırakıp görev gövdesini yazınız kullanın.
+        
+        todocom --add "Yeni görev"
+
+Görevleri görüntülemek için --show komutunu kullanın.
+
+        todocom --show
+
+bir görevi tamamlamak için görev --complete komutundan sonra görev Id'sini giriniz.
+
+        todocom --complete 0
+
+Görev silmek için --delete komutundan sonra görev Id'sini giriniz.
+
+        todocom --delete 0
+
+Daha ayrıntılı kullanım talimatları için Komutlar Başlığına göz atınız.
 
 ## Komutlar
 ___
