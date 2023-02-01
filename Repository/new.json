@@ -1,0 +1,15 @@
+{
+  "categoryName": "new",
+  "tasks": [
+    {
+      "Id": "1",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "do someting ",
+      "Category": "new",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    }
+  ]
+}

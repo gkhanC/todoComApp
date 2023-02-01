@@ -148,6 +148,11 @@ public static class CommandRepository
 
             if (repository.SelectTask(val, ref todo))
             {
+                if (!string.IsNullOrWhiteSpace(editCommand.newTitle))
+                {
+                    todo.Title = editCommand.newTitle;
+                }
+
                 return;
             }
         }

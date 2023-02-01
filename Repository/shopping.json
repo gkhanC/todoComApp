@@ -1,0 +1,25 @@
+{
+  "categoryName": "shopping",
+  "tasks": [
+    {
+      "Id": "1",
+      "isCompleted": false,
+      "Tag": "buy",
+      "Title": "buy new pen ",
+      "Category": "shopping",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "2",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "buy some paper ",
+      "Category": "shopping",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    }
+  ]
+}

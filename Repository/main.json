@@ -1,0 +1,65 @@
+{
+  "categoryName": "main",
+  "tasks": [
+    {
+      "Id": "1",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "dhaa baska bir task ",
+      "Category": "main",
+      "CreateDate": "31.01.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "2",
+      "isCompleted": true,
+      "Tag": "do",
+      "Title": "düzeltildi",
+      "Category": "main",
+      "CreateDate": "31.01.2023",
+      "DueDate": "31.01.2023",
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "3",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "Todo Com'u bitir ",
+      "Category": "main",
+      "CreateDate": "31.01.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "4",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "test task ",
+      "Category": "main",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "5",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "test task ",
+      "Category": "main",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    },
+    {
+      "Id": "6",
+      "isCompleted": false,
+      "Tag": "do",
+      "Title": "do someting ",
+      "Category": "main",
+      "CreateDate": "1.02.2023",
+      "DueDate": null,
+      "nullKey": "_#null"
+    }
+  ]
+}

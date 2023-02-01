@@ -23,7 +23,8 @@ namespace todoCOM
 
             var messageViewer = new MessageViewer("", color);
             Console.Clear();
-
+            
+            
             if (args.Length == 0)
             {
                 var msg = $"TodoCom Initialized. \nTodoCom working on \"{_REPOSİTORY.selectedCategory}\" category. ";
@@ -104,6 +105,7 @@ namespace todoCOM
             }
 
             CommandRepository.CreateEditCommand(args, ref todo, color, messageViewer, ref _REPOSİTORY, ref _FLAG);
+           
 
             if (_FLAG != OptionFlags.Edit)
                 CommandRepository.CreateEditCategoryCommand(args, ref todo, color, messageViewer, ref categoryName,
@@ -132,6 +134,7 @@ namespace todoCOM
 
             if (_FLAG == OptionFlags.Edit)
             {
+               
                 if (_REPOSİTORY.EditTask(ref todo))
                 {
                     var notify = new EditTaskNotifyViewer(todo, color);

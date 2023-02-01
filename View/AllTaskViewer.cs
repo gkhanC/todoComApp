@@ -90,7 +90,7 @@ namespace todoCOM.View
         {
             var separators = new List<CategorySeparator>();
 
-            foreach (var name in _repository.CategoryNames)
+            foreach (var name in _repository.Categories.categoryNames)
             {
                 var selected = _repository.Tasks.Where((x) => x.Category == name);
                 var cat = new CategorySeparator();

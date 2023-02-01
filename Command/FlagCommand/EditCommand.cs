@@ -17,6 +17,7 @@ namespace todoCOM.Command.FlagCommand
         public bool isFirst { get; private set; } = false;
 
         private OptionFlags _flag = OptionFlags.None;
+        public string newTitle;
 
         public EditCommand()
         {
@@ -40,7 +41,7 @@ namespace todoCOM.Command.FlagCommand
         public override bool Invoke(string[] args)
         {
             var containsOption = args.Contains(optionString) || args.Contains(aliasString);
-           
+
             if (containsOption)
             {
                 var input = args.ToList();
@@ -52,6 +53,9 @@ namespace todoCOM.Command.FlagCommand
                 {
                     var msg = args[optionIndex + 1].ToLower(CultureInfo.CurrentCulture).Replace(" ", "")
                         .Replace("\"", "");
+
+                    if (args.Length > optionIndex + 2)
+                        newTitle = args[optionIndex + 2];
 
                     if (Regex.IsMatch(msg, @"^\d+$"))
                     {

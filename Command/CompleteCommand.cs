@@ -17,7 +17,7 @@ public class CompleteCommand : CommandBaseFlag, ITodoCommand
     public string descriptionString { get; private set; } =
         " The Complete command changes the isComplete information of the task.";
 
-    public string aliasString { get; private set; } = "-cmp";
+    public string aliasString { get; private set; } = "-com";
     public string result { get; private set; } = "";
     public string completeKey { get; } = "_#comp";
 
