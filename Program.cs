@@ -21,6 +21,9 @@ namespace todoCOM
             var color = new ConsoleColorSettings();
             color.Load();
 
+            Console.WindowWidth = 120;
+            Console.BufferWidth = 120;
+            
             var messageViewer = new MessageViewer("", color);
             Console.Clear();
             
