@@ -216,7 +216,9 @@ namespace todoCOM.Repository
                 SaveLoadTool.DeleteCategory(VARIABLE);
             }
 
+            selectedCategory = "main";
             Categories.categoryNames = new List<string>();
+            Categories.categoryNames.Add(selectedCategory);
             Tasks = new List<TodoTask>();
 
             SaveCategories();
@@ -259,7 +261,7 @@ namespace todoCOM.Repository
                 return true;
             }
 
-           
+
             return false;
         }
 
