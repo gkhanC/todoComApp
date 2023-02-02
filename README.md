@@ -31,7 +31,7 @@ TodoCom'u kullanmak için aşağıdaki adımları izleyin:
         
         notepad $PROFILE
         
-Açılan dosya aşağıdaki kodu düzenleyerek ekle, <b>'Path'</b> yazan yere dosya yolunu yapıştır :
+Açılan dosya'ya aşağıdaki kodu düzenleyerek ekle, <b>'Path'</b> yazan yere dosya yolunu yapıştır :
 
         New-Alias todo PATH
 
