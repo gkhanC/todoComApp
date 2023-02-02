@@ -34,9 +34,11 @@ TodoCom'u kullanmak için aşağıdaki adımları izleyin:
 Açılan dosya'ya aşağıdaki kodu düzenleyerek ekle, <b>'Path'</b> yazan yere todoCom.exe yolunu yapıştır :
 
         function todo {
-                         cd $home
-                         PATH $args
-                       }
+                        $pwd = Get-Location
+                        cd $home
+                        PATH $args
+                        Set-Location $pwd
+                        }
 
 6. PowerShell'i kapat.
 7. Kendi kullanıcı dizinine giderek Repository adında bir klasör oluştur.
