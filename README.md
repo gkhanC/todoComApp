@@ -27,7 +27,11 @@ TodoCom'u kullanmak için aşağıdaki adımları izleyin:
 
         C:\Users\you\Documents\todoCOM\bin\Release\todoCOM.exe
 
-5. PowerShell'i aç ve aşağıdaki kodu yaz <b>'Path'</b> yazan yere dosya yolunu yapıştır :
+5. PowerShell'i aç ve aşağıdaki kodu yaz
+        
+        notepad $PROFILE
+        
+Açılan dosya aşağıdaki kodu düzenleyerek ekle, <b>'Path'</b> yazan yere dosya yolunu yapıştır :
 
         New-Alias todo PATH
 
