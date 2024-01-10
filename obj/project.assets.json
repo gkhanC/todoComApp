@@ -160,11 +160,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoCOM\\todoCOM.csproj",
+      "projectUniqueName": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoComApp\\todoCOM.csproj",
       "projectName": "todoCOM",
-      "projectPath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoCOM\\todoCOM.csproj",
+      "projectPath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoComApp\\todoCOM.csproj",
       "packagesPath": "C:\\Users\\gkhan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoCOM\\obj\\",
+      "outputPath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoComApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -179,8 +179,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files\\dotnet\\library-packs": {}
       },
       "frameworks": {
         "net6.0": {
@@ -223,7 +222,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.418\\RuntimeIdentifierGraph.json"
       }
     }
   }

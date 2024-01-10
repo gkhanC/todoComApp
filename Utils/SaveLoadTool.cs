@@ -103,8 +103,7 @@ public static class SaveLoadTool
 
     public static RepositoryData LoadRepositoryData(RepositoryData rdata)
     {
-        string filePath = ToDoComSettings.repositoryPath + "\\" + "RepositoryData.json";
-
+        string filePath = ToDoComSettings.repositoryPath + "\\" + "RepositoryData.json";        
         if (File.Exists(filePath))
         {
             string jsonString = File.ReadAllText(filePath);
@@ -139,6 +138,12 @@ public static class SaveLoadTool
     public static bool FindOrCreateFile(string filePath)
     {
         bool result = false;
+
+        if(!Directory.Exists(ToDoComSettings.repositoryPath))
+        {
+            Directory.CreateDirectory(ToDoComSettings.repositoryPath);
+        }
+
         result = File.Exists(filePath);
 
         if (!result)

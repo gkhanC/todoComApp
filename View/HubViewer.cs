@@ -67,14 +67,6 @@ public class HubViewer : Viewer
 
         if (category != null)
         {
-            if (_directive.Equals(HubDirective.All) || _directive.Equals(HubDirective.UnCompleted))
-            {
-                foreach (var selected in category.taskListUnCompleted)
-                {
-                    var taskViewer = new TaskViewer(selected, _color);
-                    taskViewer.Show();
-                }
-            }
 
             if (_directive.Equals(HubDirective.All) || _directive.Equals(HubDirective.Completed))
             {
@@ -90,6 +82,16 @@ public class HubViewer : Viewer
                     }
                 }
             }
+
+            if (_directive.Equals(HubDirective.All) || _directive.Equals(HubDirective.UnCompleted))
+            {
+                foreach (var selected in category.taskListUnCompleted)
+                {
+                    var taskViewer = new TaskViewer(selected, _color);
+                    taskViewer.Show();
+                }
+            }
+
         }
     }
 

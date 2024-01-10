@@ -25,7 +25,7 @@ TodoCom'u kullanmak için aşağıdaki adımları izleyin:
 3. Derleme işlemi bittikten sonra bin/Release klasöründeki todoCOM.exe dosyasının yolunu kopyala.
 4. Dosya yolunu aşağıdaki gibi düzenle:
 
-        C:\Users\you\Documents\todoCOM\bin\Release\todoCOM.exe
+        C:\Users\you\kopyalanan dizin\todoCOM\bin\Release\todoCOM.exe
 
 5. PowerShell'i aç ve aşağıdaki kodu yaz
         

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2nY+O4MNb1JTWPUfJI0c/pdjhmtxB20xDceQRqN4IJAHnQ4raEG9lCP9kUijuTCRiiNTlFzTg/+FzJGNY7s64Q==",
+  "dgSpecHash": "XvTlDLMBixuyqPMajncORaaUEyuj9i3GEojXqpVUzd4t0MHxKkq/hCDx1Ywhx86X05/b3O2wnJ2PiXu3A8EWzw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoCOM\\todoCOM.csproj",
+  "projectFilePath": "C:\\Users\\gkhan\\Documents\\Development\\Projects\\todoComApp\\todoCOM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gkhan\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
     "C:\\Users\\gkhan\\.nuget\\packages\\system.commandline\\2.0.0-beta4.22272.1\\system.commandline.2.0.0-beta4.22272.1.nupkg.sha512"
