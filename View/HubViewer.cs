@@ -60,10 +60,11 @@ public class HubViewer : Viewer
         Console.WriteLine("");
         ShowHeader(_color);
 
+        System.Console.WriteLine("");
+        Console.WriteLine($"Completed Tasks...");
         Console.ForegroundColor = _color.SeparatorColor.ForegroundColor;
         Console.BackgroundColor = _color.SeparatorColor.BackgroundColor;
         Console.WriteLine(separator);
-
 
         if (category != null)
         {
@@ -82,6 +83,11 @@ public class HubViewer : Viewer
                     }
                 }
             }
+            
+            Console.WriteLine($"UnCompleted Tasks...");
+            Console.ForegroundColor = _color.SeparatorColor.ForegroundColor;
+            Console.BackgroundColor = _color.SeparatorColor.BackgroundColor;
+            Console.WriteLine(separator);
 
             if (_directive.Equals(HubDirective.All) || _directive.Equals(HubDirective.UnCompleted))
             {
