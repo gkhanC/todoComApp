@@ -152,6 +152,7 @@ namespace todoCOM.Repository
                     if (selected.Id == todo.Id)
                     {
                         Tasks.Remove(selected);
+                        SetsAllId();
                         flag = true;
                         break;
                     }
@@ -263,6 +264,31 @@ namespace todoCOM.Repository
 
 
             return false;
+        }
+
+        public bool InsertTask(ref TodoTask task)
+        {
+            LoadTasks();
+
+            var todoTask = task;
+            var index = Convert.ToInt32(todoTask.Id);
+
+            Tasks.Insert(index > 0 ? index - 1 : index, todoTask);
+
+            SetsAllId();
+            SaveTasks();
+            SaveRepository();
+
+            return true;
+
+        }
+
+        private void SetsAllId()
+        {
+            for (var i = 0; i < Tasks.Count; i++)
+            {
+                Tasks[i].Id = (i + 1).ToString();
+            }
         }
 
         public bool EditCategory(TodoTask task)

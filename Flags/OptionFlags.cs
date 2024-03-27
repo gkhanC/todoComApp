@@ -16,5 +16,6 @@ public enum OptionFlags
     Add = 11,
     Error = 12,
     EditCategory = 13,
+    Insert = 14,
     None = 50
 }
